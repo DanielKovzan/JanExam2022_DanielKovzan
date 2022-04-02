@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="Factions" EntityType="Model1.Store.Factions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SubFactions1" EntityType="Model1.Store.SubFactions1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UnitTypes" EntityType="Model1.Store.UnitTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Units" EntityType="Model1.Store.Units" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FactionsSubFactions" Association="Model1.Store.FactionsSubFactions">
+      <End Role="Factions" EntitySet="Factions" />
+      <End Role="SubFactions" EntitySet="SubFactions1" />
+    </AssociationSet>
+    <AssociationSet Name="UnitTypesUnits" Association="Model1.Store.UnitTypesUnits">
+      <End Role="UnitTypes" EntitySet="UnitTypes" />
+      <End Role="Units" EntitySet="Units" />
+    </AssociationSet>
+    <AssociationSet Name="SubFactionsUnits" Association="Model1.Store.SubFactionsUnits">
+      <End Role="SubFactions" EntitySet="SubFactions1" />
+      <End Role="Units" EntitySet="Units" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Factions">
+    <Key>
+      <PropertyRef Name="FactionID" />
+    </Key>
+    <Property Name="FactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubFactions1">
+    <Key>
+      <PropertyRef Name="SubFactionID" />
+    </Key>
+    <Property Name="SubFactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FactionID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UnitTypes">
+    <Key>
+      <PropertyRef Name="UnitTypeID" />
+    </Key>
+    <Property Name="UnitTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Units">
+    <Key>
+      <PropertyRef Name="UnitUD" />
+    </Key>
+    <Property Name="UnitUD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnitTypeID" Type="int" Nullable="false" />
+    <Property Name="SubFactionID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UnitValue" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UnitImage" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FactionsSubFactions">
+    <End Role="Factions" Type="Model1.Store.Factions" Multiplicity="1" />
+    <End Role="SubFactions" Type="Model1.Store.SubFactions1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factions">
+        <PropertyRef Name="FactionID" />
+      </Principal>
+      <Dependent Role="SubFactions">
+        <PropertyRef Name="FactionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UnitTypesUnits">
+    <End Role="UnitTypes" Type="Model1.Store.UnitTypes" Multiplicity="1" />
+    <End Role="Units" Type="Model1.Store.Units" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitTypes">
+        <PropertyRef Name="UnitTypeID" />
+      </Principal>
+      <Dependent Role="Units">
+        <PropertyRef Name="UnitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SubFactionsUnits">
+    <End Role="SubFactions" Type="Model1.Store.SubFactions1" Multiplicity="1" />
+    <End Role="Units" Type="Model1.Store.Units" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubFactions">
+        <PropertyRef Name="SubFactionID" />
+      </Principal>
+      <Dependent Role="Units">
+        <PropertyRef Name="SubFactionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Factions" EntityType="Model1.Factions" />
+          <EntitySet Name="SubFactions1" EntityType="Model1.SubFactions" />
+          <AssociationSet Name="FactionsSubFactions" Association="Model1.FactionsSubFactions">
+            <End Role="Factions" EntitySet="Factions" />
+            <End Role="SubFactions" EntitySet="SubFactions1" />
+          </AssociationSet>
+          <EntitySet Name="UnitTypes" EntityType="Model1.UnitTypes" />
+          <EntitySet Name="Units" EntityType="Model1.Units" />
+          <AssociationSet Name="UnitTypesUnits" Association="Model1.UnitTypesUnits">
+            <End Role="UnitTypes" EntitySet="UnitTypes" />
+            <End Role="Units" EntitySet="Units" />
+          </AssociationSet>
+          <AssociationSet Name="SubFactionsUnits" Association="Model1.SubFactionsUnits">
+            <End Role="SubFactions" EntitySet="SubFactions1" />
+            <End Role="Units" EntitySet="Units" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Factions">
+          <Key>
+            <PropertyRef Name="FactionID" />
+          </Key>
+          <Property Name="FactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="SubFactions" Relationship="Model1.FactionsSubFactions" FromRole="Factions" ToRole="SubFactions" />
+        </EntityType>
+        <EntityType Name="SubFactions">
+          <Key>
+            <PropertyRef Name="SubFactionID" />
+          </Key>
+          <Property Name="SubFactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Faction" Relationship="Model1.FactionsSubFactions" FromRole="SubFactions" ToRole="Factions" />
+          <Property Name="FactionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Units" Relationship="Model1.SubFactionsUnits" FromRole="SubFactions" ToRole="Units" />
+        </EntityType>
+        <Association Name="FactionsSubFactions">
+          <End Type="Model1.Factions" Role="Factions" Multiplicity="1" />
+          <End Type="Model1.SubFactions" Role="SubFactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factions">
+              <PropertyRef Name="FactionID" />
+            </Principal>
+            <Dependent Role="SubFactions">
+              <PropertyRef Name="FactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UnitTypes">
+          <Key>
+            <PropertyRef Name="UnitTypeID" />
+          </Key>
+          <Property Name="UnitTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Units" Relationship="Model1.UnitTypesUnits" FromRole="UnitTypes" ToRole="Units" />
+        </EntityType>
+        <EntityType Name="Units">
+          <Key>
+            <PropertyRef Name="UnitUD" />
+          </Key>
+          <Property Name="UnitUD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="UnitTypes" Relationship="Model1.UnitTypesUnits" FromRole="Units" ToRole="UnitTypes" />
+          <Property Name="UnitTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SubFaction" Relationship="Model1.SubFactionsUnits" FromRole="Units" ToRole="SubFactions" />
+          <Property Name="SubFactionID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="UnitValue" Type="String" Nullable="false" />
+          <Property Name="UnitImage" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="UnitTypesUnits">
+          <End Type="Model1.UnitTypes" Role="UnitTypes" Multiplicity="1" />
+          <End Type="Model1.Units" Role="Units" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitTypes">
+              <PropertyRef Name="UnitTypeID" />
+            </Principal>
+            <Dependent Role="Units">
+              <PropertyRef Name="UnitTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SubFactionsUnits">
+          <End Type="Model1.SubFactions" Role="SubFactions" Multiplicity="1" />
+          <End Type="Model1.Units" Role="Units" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubFactions">
+              <PropertyRef Name="SubFactionID" />
+            </Principal>
+            <Dependent Role="Units">
+              <PropertyRef Name="SubFactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="Factions">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Factions)">
+        <MappingFragment StoreEntitySet="Factions">
+          <ScalarProperty Name="FactionID" ColumnName="FactionID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubFactions1">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.SubFactions)">
+        <MappingFragment StoreEntitySet="SubFactions1">
+          <ScalarProperty Name="SubFactionID" ColumnName="SubFactionID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="FactionID" ColumnName="FactionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.UnitTypes)">
+        <MappingFragment StoreEntitySet="UnitTypes">
+          <ScalarProperty Name="UnitTypeID" ColumnName="UnitTypeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Units">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Units)">
+        <MappingFragment StoreEntitySet="Units">
+          <ScalarProperty Name="UnitUD" ColumnName="UnitUD" />
+          <ScalarProperty Name="UnitTypeID" ColumnName="UnitTypeID" />
+          <ScalarProperty Name="SubFactionID" ColumnName="SubFactionID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UnitValue" ColumnName="UnitValue" />
+          <ScalarProperty Name="UnitImage" ColumnName="UnitImage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

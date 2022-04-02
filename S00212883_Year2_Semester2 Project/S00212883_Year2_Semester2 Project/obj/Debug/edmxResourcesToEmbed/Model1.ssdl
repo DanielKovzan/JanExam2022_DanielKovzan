@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="Factions" EntityType="Model1.Store.Factions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SubFactions1" EntityType="Model1.Store.SubFactions1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UnitTypes" EntityType="Model1.Store.UnitTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Units" EntityType="Model1.Store.Units" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FactionsSubFactions" Association="Model1.Store.FactionsSubFactions">
+      <End Role="Factions" EntitySet="Factions" />
+      <End Role="SubFactions" EntitySet="SubFactions1" />
+    </AssociationSet>
+    <AssociationSet Name="UnitTypesUnits" Association="Model1.Store.UnitTypesUnits">
+      <End Role="UnitTypes" EntitySet="UnitTypes" />
+      <End Role="Units" EntitySet="Units" />
+    </AssociationSet>
+    <AssociationSet Name="SubFactionsUnits" Association="Model1.Store.SubFactionsUnits">
+      <End Role="SubFactions" EntitySet="SubFactions1" />
+      <End Role="Units" EntitySet="Units" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Factions">
+    <Key>
+      <PropertyRef Name="FactionID" />
+    </Key>
+    <Property Name="FactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubFactions1">
+    <Key>
+      <PropertyRef Name="SubFactionID" />
+    </Key>
+    <Property Name="SubFactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FactionID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UnitTypes">
+    <Key>
+      <PropertyRef Name="UnitTypeID" />
+    </Key>
+    <Property Name="UnitTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Units">
+    <Key>
+      <PropertyRef Name="UnitUD" />
+    </Key>
+    <Property Name="UnitUD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnitTypeID" Type="int" Nullable="false" />
+    <Property Name="SubFactionID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UnitValue" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UnitImage" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FactionsSubFactions">
+    <End Role="Factions" Type="Model1.Store.Factions" Multiplicity="1" />
+    <End Role="SubFactions" Type="Model1.Store.SubFactions1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factions">
+        <PropertyRef Name="FactionID" />
+      </Principal>
+      <Dependent Role="SubFactions">
+        <PropertyRef Name="FactionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UnitTypesUnits">
+    <End Role="UnitTypes" Type="Model1.Store.UnitTypes" Multiplicity="1" />
+    <End Role="Units" Type="Model1.Store.Units" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitTypes">
+        <PropertyRef Name="UnitTypeID" />
+      </Principal>
+      <Dependent Role="Units">
+        <PropertyRef Name="UnitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SubFactionsUnits">
+    <End Role="SubFactions" Type="Model1.Store.SubFactions1" Multiplicity="1" />
+    <End Role="Units" Type="Model1.Store.Units" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubFactions">
+        <PropertyRef Name="SubFactionID" />
+      </Principal>
+      <Dependent Role="Units">
+        <PropertyRef Name="SubFactionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
