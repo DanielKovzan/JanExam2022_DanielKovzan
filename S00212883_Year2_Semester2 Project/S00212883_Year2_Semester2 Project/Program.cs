@@ -10,6 +10,7 @@ namespace S00212883_Year2_Semester2_Project
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Hi!");
         }
     }
 }
