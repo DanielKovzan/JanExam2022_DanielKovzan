@@ -41,14 +41,14 @@
 
         
         <ComboBox Grid.Column="0" Grid.Row="0" Name="FacCombo" HorizontalContentAlignment="Center" IsReadOnly="True" Margin="8" SelectedIndex="-1" SelectionChanged="FacCombo_SelectionChanged" >
-            <ComboBoxItem Content="Chaos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Black" Foreground="Red"/>
+            <ComboBoxItem Content="Chaos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Black" Foreground="Red"   />
             <ComboBoxItem Content="Imperium" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Gold" Foreground="Red"/>
             <ComboBoxItem Content="Xenos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Purple" Foreground="LimeGreen"/>
             <ComboBoxItem Content="Forge Worlds" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="SandyBrown" Foreground="Black"/>
         </ComboBox>
         <Label Name="FactionLabel" Grid.Row="0" Grid.Column="0" Height="25" FontFamily="Times New Roman"  Content="Please Select a Faction" HorizontalAlignment="Center" IsHitTestVisible="False"/>
         
-        <ComboBox Grid.Row="0" Grid.Column="1" Name="SubFacCombo" IsReadOnly="True" Margin="8" Visibility="Hidden" IsHitTestVisible="False">
+        <ComboBox Grid.Row="0" Grid.Column="1" Name="SubFacCombo" IsReadOnly="True" Margin="8" Visibility="Hidden" IsHitTestVisible="False" SelectionChanged="SubFacCombo_SelectionChanged">
             
         </ComboBox>
         <Label Name="SubFactionLabel" Grid.Row="0" Grid.Column="1" Height="25" FontFamily="Times New Roman"  Content="Please Select a Sub Faction" HorizontalAlignment="Center" IsHitTestVisible="False" Visibility="Hidden"/>

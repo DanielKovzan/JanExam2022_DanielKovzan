@@ -39,17 +39,21 @@ namespace WPFProject
             SubFactionLabel.Visibility = Visibility.Visible;
             FactionLabel.Visibility = Visibility.Hidden;
 
-            string SelectedFaction = FacCombo.SelectedItem as string;
-
-            //Displays Subfactions
-            if(SelectedFaction != null && SelectedFaction != "")
-            {
+            //Query and Output
+                int ID = FacCombo.SelectedIndex +  1; 
                 var query = from sub in DB.SubFactions
-                            where SelectedFaction.Equals(sub.Faction.Name)
-                            select sub;
+                            where ID.Equals(sub.FactionID)
+                            select sub.Name;
 
-                
-            }
+                foreach (string subfac in query)
+                {
+                    SubFacCombo.Items.Add(subfac);
+                }
+        }
+
+        private void SubFacCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SubFactionLabel.Visibility = Visibility.Hidden;
         }
     }
 }
