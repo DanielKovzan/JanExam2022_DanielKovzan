@@ -1,0 +1,43 @@
+﻿<Window x:Class="WPFProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFProject"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="1000" Loaded="Window_Loaded">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <RadioButton VerticalContentAlignment="Center" Content="All"/>
+        <RadioButton Grid.Row="1" VerticalContentAlignment="Center" Content="All"/>
+        <RadioButton Grid.Row="2" VerticalContentAlignment="Center" Content="All"/>
+        <RadioButton Grid.Row="3" VerticalContentAlignment="Center" Content="All"/>
+        <RadioButton Grid.Row="4" VerticalContentAlignment="Center" Content="All"/>
+        <RadioButton Grid.Row="5" VerticalContentAlignment="Center" Content="All"/>
+        <RadioButton Grid.Row="6" VerticalContentAlignment="Center" Content="All"/>
+        <RadioButton Grid.Row="7" VerticalContentAlignment="Center" Content="All"/>
+        <RadioButton Grid.Row="8" VerticalContentAlignment="Center" Content="All"/>
+        <RadioButton Grid.Row="9" VerticalContentAlignment="Center" Content="All"/>
+    </Grid>
+</Window>

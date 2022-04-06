@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WH.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Factions">
+          <Key>
+            <PropertyRef Name="FactionID" />
+          </Key>
+          <Property Name="FactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubFactions">
+          <Key>
+            <PropertyRef Name="SubFactionID" />
+          </Key>
+          <Property Name="SubFactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FactionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Units">
+          <Key>
+            <PropertyRef Name="UnitUD" />
+          </Key>
+          <Property Name="UnitUD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitTypeID" Type="int" Nullable="false" />
+          <Property Name="SubFactionID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UnitValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UnitImage" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UnitTypes">
+          <Key>
+            <PropertyRef Name="UnitTypeID" />
+          </Key>
+          <Property Name="UnitTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FactionsSubFactions">
+          <End Role="Factions" Type="Self.Factions" Multiplicity="1" />
+          <End Role="SubFactions" Type="Self.SubFactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factions">
+              <PropertyRef Name="FactionID" />
+            </Principal>
+            <Dependent Role="SubFactions">
+              <PropertyRef Name="FactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubFactionsUnits">
+          <End Role="SubFactions" Type="Self.SubFactions" Multiplicity="1" />
+          <End Role="Units" Type="Self.Units" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubFactions">
+              <PropertyRef Name="SubFactionID" />
+            </Principal>
+            <Dependent Role="Units">
+              <PropertyRef Name="SubFactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnitTypesUnits">
+          <End Role="UnitTypes" Type="Self.UnitTypes" Multiplicity="1" />
+          <End Role="Units" Type="Self.Units" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitTypes">
+              <PropertyRef Name="UnitTypeID" />
+            </Principal>
+            <Dependent Role="Units">
+              <PropertyRef Name="UnitTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="InsertUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EUnitTypeID" Type="int" Mode="In" />
+          <Parameter Name="ESubFactionID" Type="int" Mode="In" />
+          <Parameter Name="EName" Type="varchar" Mode="In" />
+          <Parameter Name="EUnitValue" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="WHStoreContainer">
+          <EntitySet Name="Factions" EntityType="Self.Factions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubFactions" EntityType="Self.SubFactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitTypes" EntityType="Self.UnitTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FactionsSubFactions" Association="Self.FK_FactionsSubFactions">
+            <End Role="Factions" EntitySet="Factions" />
+            <End Role="SubFactions" EntitySet="SubFactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubFactionsUnits" Association="Self.FK_SubFactionsUnits">
+            <End Role="SubFactions" EntitySet="SubFactions" />
+            <End Role="Units" EntitySet="Units" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnitTypesUnits" Association="Self.FK_UnitTypesUnits">
+            <End Role="UnitTypes" EntitySet="UnitTypes" />
+            <End Role="Units" EntitySet="Units" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WH" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Faction">
+          <Key>
+            <PropertyRef Name="FactionID" />
+          </Key>
+          <Property Name="FactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SubFactions" Relationship="Self.FK_FactionsSubFactions" FromRole="Factions" ToRole="SubFactions" />
+        </EntityType>
+        <EntityType Name="SubFaction">
+          <Key>
+            <PropertyRef Name="SubFactionID" />
+          </Key>
+          <Property Name="SubFactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FactionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Faction" Relationship="Self.FK_FactionsSubFactions" FromRole="SubFactions" ToRole="Factions" />
+          <NavigationProperty Name="Units" Relationship="Self.FK_SubFactionsUnits" FromRole="SubFactions" ToRole="Units" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitUD" />
+          </Key>
+          <Property Name="UnitUD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitTypeID" Type="Int32" Nullable="false" />
+          <Property Name="SubFactionID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UnitValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UnitImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SubFaction" Relationship="Self.FK_SubFactionsUnits" FromRole="Units" ToRole="SubFactions" />
+          <NavigationProperty Name="UnitType" Relationship="Self.FK_UnitTypesUnits" FromRole="Units" ToRole="UnitTypes" />
+        </EntityType>
+        <EntityType Name="UnitType">
+          <Key>
+            <PropertyRef Name="UnitTypeID" />
+          </Key>
+          <Property Name="UnitTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Units" Relationship="Self.FK_UnitTypesUnits" FromRole="UnitTypes" ToRole="Units" />
+        </EntityType>
+        <Association Name="FK_FactionsSubFactions">
+          <End Role="Factions" Type="Self.Faction" Multiplicity="1" />
+          <End Role="SubFactions" Type="Self.SubFaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factions">
+              <PropertyRef Name="FactionID" />
+            </Principal>
+            <Dependent Role="SubFactions">
+              <PropertyRef Name="FactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubFactionsUnits">
+          <End Role="SubFactions" Type="Self.SubFaction" Multiplicity="1" />
+          <End Role="Units" Type="Self.Unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubFactions">
+              <PropertyRef Name="SubFactionID" />
+            </Principal>
+            <Dependent Role="Units">
+              <PropertyRef Name="SubFactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnitTypesUnits">
+          <End Role="UnitTypes" Type="Self.UnitType" Multiplicity="1" />
+          <End Role="Units" Type="Self.Unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitTypes">
+              <PropertyRef Name="UnitTypeID" />
+            </Principal>
+            <Dependent Role="Units">
+              <PropertyRef Name="UnitTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WarHammer40kDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Factions" EntityType="Self.Faction" />
+          <EntitySet Name="SubFactions" EntityType="Self.SubFaction" />
+          <EntitySet Name="Units" EntityType="Self.Unit" />
+          <EntitySet Name="UnitTypes" EntityType="Self.UnitType" />
+          <AssociationSet Name="FK_FactionsSubFactions" Association="Self.FK_FactionsSubFactions">
+            <End Role="Factions" EntitySet="Factions" />
+            <End Role="SubFactions" EntitySet="SubFactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubFactionsUnits" Association="Self.FK_SubFactionsUnits">
+            <End Role="SubFactions" EntitySet="SubFactions" />
+            <End Role="Units" EntitySet="Units" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnitTypesUnits" Association="Self.FK_UnitTypesUnits">
+            <End Role="UnitTypes" EntitySet="UnitTypes" />
+            <End Role="Units" EntitySet="Units" />
+          </AssociationSet>
+          <FunctionImport Name="InsertUnit">
+            <Parameter Name="EUnitTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="ESubFactionID" Mode="In" Type="Int32" />
+            <Parameter Name="EName" Mode="In" Type="String" />
+            <Parameter Name="EUnitValue" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WHStoreContainer" CdmEntityContainer="WarHammer40kDBEntities">
+          <EntitySetMapping Name="Factions">
+            <EntityTypeMapping TypeName="WH.Faction">
+              <MappingFragment StoreEntitySet="Factions">
+                <ScalarProperty Name="FactionID" ColumnName="FactionID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubFactions">
+            <EntityTypeMapping TypeName="WH.SubFaction">
+              <MappingFragment StoreEntitySet="SubFactions">
+                <ScalarProperty Name="SubFactionID" ColumnName="SubFactionID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FactionID" ColumnName="FactionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="WH.Unit">
+              <MappingFragment StoreEntitySet="Units">
+                <ScalarProperty Name="UnitUD" ColumnName="UnitUD" />
+                <ScalarProperty Name="UnitTypeID" ColumnName="UnitTypeID" />
+                <ScalarProperty Name="SubFactionID" ColumnName="SubFactionID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UnitValue" ColumnName="UnitValue" />
+                <ScalarProperty Name="UnitImage" ColumnName="UnitImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitTypes">
+            <EntityTypeMapping TypeName="WH.UnitType">
+              <MappingFragment StoreEntitySet="UnitTypes">
+                <ScalarProperty Name="UnitTypeID" ColumnName="UnitTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="InsertUnit" FunctionName="WH.Store.InsertUnit" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
