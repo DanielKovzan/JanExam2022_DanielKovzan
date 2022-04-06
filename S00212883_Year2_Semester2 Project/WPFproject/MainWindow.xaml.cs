@@ -30,5 +30,26 @@ namespace WPFProject
         {
 
         }
+
+        private void FacCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //Unhiding and hiding stuff
+            SubFacCombo.Visibility = Visibility.Visible;
+            SubFacCombo.IsHitTestVisible = true;
+            SubFactionLabel.Visibility = Visibility.Visible;
+            FactionLabel.Visibility = Visibility.Hidden;
+
+            string SelectedFaction = FacCombo.SelectedItem as string;
+
+            //Displays Subfactions
+            if(SelectedFaction != null && SelectedFaction != "")
+            {
+                var query = from sub in DB.SubFactions
+                            where SelectedFaction.Equals(sub.Faction.Name)
+                            select sub;
+
+                
+            }
+        }
     }
 }

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WHStoreContainer" CdmEntityContainer="WarHammer40kDBEntities">
+    <EntitySetMapping Name="Factions">
+      <EntityTypeMapping TypeName="WH.Faction">
+        <MappingFragment StoreEntitySet="Factions">
+          <ScalarProperty Name="FactionID" ColumnName="FactionID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubFactions">
+      <EntityTypeMapping TypeName="WH.SubFaction">
+        <MappingFragment StoreEntitySet="SubFactions">
+          <ScalarProperty Name="SubFactionID" ColumnName="SubFactionID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="FactionID" ColumnName="FactionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Units">
+      <EntityTypeMapping TypeName="WH.Unit">
+        <MappingFragment StoreEntitySet="Units">
+          <ScalarProperty Name="UnitUD" ColumnName="UnitUD" />
+          <ScalarProperty Name="UnitTypeID" ColumnName="UnitTypeID" />
+          <ScalarProperty Name="SubFactionID" ColumnName="SubFactionID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UnitValue" ColumnName="UnitValue" />
+          <ScalarProperty Name="UnitImage" ColumnName="UnitImage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitTypes">
+      <EntityTypeMapping TypeName="WH.UnitType">
+        <MappingFragment StoreEntitySet="UnitTypes">
+          <ScalarProperty Name="UnitTypeID" ColumnName="UnitTypeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="InsertUnit" FunctionName="WH.Store.InsertUnit" />
+  </EntityContainerMapping>
+</Mapping>

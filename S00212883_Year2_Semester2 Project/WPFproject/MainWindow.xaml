@@ -3,10 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFProject"
-        mc:Ignorable="d"
+        xmlns:materialDesign="https://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:WPFProject" xmlns:materialDesign1="http://materialdesigninxaml.net/winfx/xaml/themes"
+         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000" Loaded="Window_Loaded">
     
+        <Window.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <materialDesign1:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Red" />
+                    <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Window.Resources>
+  
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -29,15 +39,18 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <RadioButton VerticalContentAlignment="Center" Content="All"/>
-        <RadioButton Grid.Row="1" VerticalContentAlignment="Center" Content="All"/>
-        <RadioButton Grid.Row="2" VerticalContentAlignment="Center" Content="All"/>
-        <RadioButton Grid.Row="3" VerticalContentAlignment="Center" Content="All"/>
-        <RadioButton Grid.Row="4" VerticalContentAlignment="Center" Content="All"/>
-        <RadioButton Grid.Row="5" VerticalContentAlignment="Center" Content="All"/>
-        <RadioButton Grid.Row="6" VerticalContentAlignment="Center" Content="All"/>
-        <RadioButton Grid.Row="7" VerticalContentAlignment="Center" Content="All"/>
-        <RadioButton Grid.Row="8" VerticalContentAlignment="Center" Content="All"/>
-        <RadioButton Grid.Row="9" VerticalContentAlignment="Center" Content="All"/>
+        
+        <ComboBox Grid.Column="0" Grid.Row="0" Name="FacCombo" HorizontalContentAlignment="Center" IsReadOnly="True" Margin="8" SelectedIndex="-1" SelectionChanged="FacCombo_SelectionChanged" >
+            <ComboBoxItem Content="Chaos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Black" Foreground="Red"/>
+            <ComboBoxItem Content="Imperium" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Gold" Foreground="Red"/>
+            <ComboBoxItem Content="Xenos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Purple" Foreground="LimeGreen"/>
+            <ComboBoxItem Content="Forge Worlds" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="SandyBrown" Foreground="Black"/>
+        </ComboBox>
+        <Label Name="FactionLabel" Grid.Row="0" Grid.Column="0" Height="25" FontFamily="Times New Roman"  Content="Please Select a Faction" HorizontalAlignment="Center" IsHitTestVisible="False"/>
+        
+        <ComboBox Grid.Row="0" Grid.Column="1" Name="SubFacCombo" IsReadOnly="True" Margin="8" Visibility="Hidden" IsHitTestVisible="False">
+            
+        </ComboBox>
+        <Label Name="SubFactionLabel" Grid.Row="0" Grid.Column="1" Height="25" FontFamily="Times New Roman"  Content="Please Select a Sub Faction" HorizontalAlignment="Center" IsHitTestVisible="False" Visibility="Hidden"/>
     </Grid>
 </Window>

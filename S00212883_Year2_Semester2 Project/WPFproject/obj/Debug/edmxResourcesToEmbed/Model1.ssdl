@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WH.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Factions">
+    <Key>
+      <PropertyRef Name="FactionID" />
+    </Key>
+    <Property Name="FactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubFactions">
+    <Key>
+      <PropertyRef Name="SubFactionID" />
+    </Key>
+    <Property Name="SubFactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FactionID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Units">
+    <Key>
+      <PropertyRef Name="UnitUD" />
+    </Key>
+    <Property Name="UnitUD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnitTypeID" Type="int" Nullable="false" />
+    <Property Name="SubFactionID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UnitValue" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UnitImage" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UnitTypes">
+    <Key>
+      <PropertyRef Name="UnitTypeID" />
+    </Key>
+    <Property Name="UnitTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_FactionsSubFactions">
+    <End Role="Factions" Type="Self.Factions" Multiplicity="1" />
+    <End Role="SubFactions" Type="Self.SubFactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factions">
+        <PropertyRef Name="FactionID" />
+      </Principal>
+      <Dependent Role="SubFactions">
+        <PropertyRef Name="FactionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubFactionsUnits">
+    <End Role="SubFactions" Type="Self.SubFactions" Multiplicity="1" />
+    <End Role="Units" Type="Self.Units" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubFactions">
+        <PropertyRef Name="SubFactionID" />
+      </Principal>
+      <Dependent Role="Units">
+        <PropertyRef Name="SubFactionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UnitTypesUnits">
+    <End Role="UnitTypes" Type="Self.UnitTypes" Multiplicity="1" />
+    <End Role="Units" Type="Self.Units" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitTypes">
+        <PropertyRef Name="UnitTypeID" />
+      </Principal>
+      <Dependent Role="Units">
+        <PropertyRef Name="UnitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="InsertUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EUnitTypeID" Type="int" Mode="In" />
+    <Parameter Name="ESubFactionID" Type="int" Mode="In" />
+    <Parameter Name="EName" Type="varchar" Mode="In" />
+    <Parameter Name="EUnitValue" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="WHStoreContainer">
+    <EntitySet Name="Factions" EntityType="Self.Factions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubFactions" EntityType="Self.SubFactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UnitTypes" EntityType="Self.UnitTypes" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_FactionsSubFactions" Association="Self.FK_FactionsSubFactions">
+      <End Role="Factions" EntitySet="Factions" />
+      <End Role="SubFactions" EntitySet="SubFactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubFactionsUnits" Association="Self.FK_SubFactionsUnits">
+      <End Role="SubFactions" EntitySet="SubFactions" />
+      <End Role="Units" EntitySet="Units" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UnitTypesUnits" Association="Self.FK_UnitTypesUnits">
+      <End Role="UnitTypes" EntitySet="UnitTypes" />
+      <End Role="Units" EntitySet="Units" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
