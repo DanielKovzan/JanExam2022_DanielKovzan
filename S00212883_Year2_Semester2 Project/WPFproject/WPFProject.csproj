@@ -87,6 +87,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SubFactionClass.cs" />
+    <Compile Include="UnitsClass.cs" />
     <Compile Include="Faction.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
