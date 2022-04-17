@@ -20,16 +20,6 @@ namespace WPFProject
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// 
-    /// So my project, like, now that i feel like im done the project, i really could have done some fancy shit and 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 
     /// </summary>
     public partial class MainWindow : Window
     {
