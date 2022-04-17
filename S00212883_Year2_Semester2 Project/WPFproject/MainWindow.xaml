@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:WPFProject" xmlns:materialDesign1="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
          mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="1000" Loaded="Window_Loaded">
+        Title="MainWindow" Height="500" Width="1000">
     
         <Window.Resources>
         <DataTemplate x:Key="dataTemplateUnits">
@@ -64,10 +64,7 @@
 
                 <!--Main Faction Boxo-->
                 <ComboBox Grid.Column="0" Grid.Row="2" Name="FacCombo" HorizontalContentAlignment="Center" IsReadOnly="True" Margin="8" SelectedIndex="-1" SelectionChanged="FacCombo_SelectionChanged" FontFamily="Times New Roman" >
-                    <ComboBoxItem Content="Chaos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Black" Foreground="Red"   />
-                    <ComboBoxItem Content="Imperium" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Gold" Foreground="Red"/>
-                    <ComboBoxItem Content="Xenos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Purple" Foreground="LimeGreen"/>
-                    <ComboBoxItem Content="Forge Worlds" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="SandyBrown" Foreground="Black"/>
+                   
                 </ComboBox>
                 <Label Name="FactionLabel" Grid.Row="2" Grid.Column="0" Height="25" FontFamily="Times New Roman"  Content="Please Select a Faction" HorizontalAlignment="Center" IsHitTestVisible="False"/>
 
@@ -119,7 +116,7 @@
                 <Button x:Name="AddUnitBtn" Content="Add Unit" Margin="5" Grid.Row="3" Grid.Column="4" Click="AddUnitBtn_Click" BorderThickness="3" BorderBrush="Black" Foreground="Black" Visibility="Hidden"/>
                 <Button x:Name="RemoveUnitBtn" Content="Remove Unit" Margin="5" Grid.Row="6" Grid.Column="4" Click="RemoveUnitBtn_Click" BorderThickness="3" BorderBrush="Black" Foreground="Black" Visibility="Hidden"/>
 
-                <Button x:Name="PieButton" Grid.Row="9" Content="Create Pie Chart" Foreground="Black" Margin="5" FontSize="11" Click="PieButton_Click"/>
+                <Button x:Name="PieButton" Grid.Row="9" Content="Create Pie Chart" Foreground="Black" Margin="5" FontSize="11" Click="PieButton_Click" BorderThickness="3" BorderBrush="Black"/>
 
                 <!--Points Labels-->
                 <Label Name="PointsTitleLabel" Grid.Row="8" Grid.Column="4" Content="Remaining Points" Margin="5"  Height="25" FontFamily="Times New Roman" Grid.RowSpan="2" HorizontalContentAlignment="Center" Visibility="Hidden"/>

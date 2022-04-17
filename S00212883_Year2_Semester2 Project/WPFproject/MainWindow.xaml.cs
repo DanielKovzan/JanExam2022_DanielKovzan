@@ -32,14 +32,11 @@ namespace WPFProject
         public MainWindow()
         {
             InitializeComponent();
+            PopulateFactionCombo();
         }
 
         public SeriesCollection SeriesCollection { get; set; }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
-
+         //Counting thing for pie chart so it gets the amount of uinits of each type of unit
         public int ForPieChart(int UnitType)
         {
             int AmountOfUnits = 0;
@@ -54,6 +51,19 @@ namespace WPFProject
 
             return AmountOfUnits;
         }
+        public void PopulateFactionCombo()
+        {
+            var query = from fac in DB.Factions
+                        select fac.Name;
+
+            foreach (var faction in query)
+            {
+                FacCombo.Items.Add(faction);
+            }
+        }
+
+
+
 
         //ComboBoxes
         #region
@@ -73,20 +83,24 @@ namespace WPFProject
             ChosenUnitLbx.ItemsSource = null;
             UnitLbx.ItemsSource = null;
 
-            //Query and Output
-            int ID = FacCombo.SelectedIndex +  1;
-            var query = from sub in DB.SubFactions
-                        where ID.Equals(sub.FactionID)
-                        select new SubFactionClass()
-                        {
-                            SubFactionName = sub.Name,
-                            SubfactionID = sub.SubFactionID
-                        };
-
-            foreach (SubFactionClass subfac in query)
+            if (FacCombo.SelectedIndex != -1)
             {
-                SubFacCombo.Items.Add(subfac);
+                //Query and Output
+                int ID = FacCombo.SelectedIndex + 1;
+                var query = from sub in DB.SubFactions
+                            where ID.Equals(sub.FactionID)
+                            select new SubFactionClass()
+                            {
+                                SubFactionName = sub.Name,
+                                SubfactionID = sub.SubFactionID
+                            };
+
+                foreach (SubFactionClass subfac in query)
+                {
+                    SubFacCombo.Items.Add(subfac);
+                }
             }
+            
         }
 
         //Choose a SubFaction
@@ -151,9 +165,17 @@ namespace WPFProject
                 PointsNumberLabel.Content = MaxPoints.ToString();
                 ChosenUnits.Clear();
                 ChosenUnitLbx.ItemsSource = null;
+                UnitLbx.ItemsSource = null;
+                SubFacCombo.Items.Clear();
+
+                FacCombo.SelectedIndex = -1;
+                FactionLabel.Visibility = Visibility.Visible;
             }
         }
         #endregion
+
+
+
 
         //God this was one very efficient method
         public void Filtering(int UnitType)
@@ -263,6 +285,10 @@ namespace WPFProject
         }
         #endregion
 
+
+
+
+
         //Buttons
         #region
         //Remove units from ChosenUntisLbx
@@ -316,6 +342,10 @@ namespace WPFProject
             }
         }
         #endregion
+
+
+
+
 
         //makes a god damn pie chart
         private void PieButton_Click(object sender, RoutedEventArgs e)
