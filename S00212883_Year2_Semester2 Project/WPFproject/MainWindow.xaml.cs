@@ -12,16 +12,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
 
 namespace WPFProject
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// 
+    /// So my project, like, now that i feel like im done the project, i really could have done some fancy shit and 
+    /// 
+    /// 
+    /// 
+    /// 
+    /// 
+    /// 
+    /// 
+    /// 
     /// </summary>
     public partial class MainWindow : Window
     {
         WarHammer40kDBEntities DB = new WarHammer40kDBEntities();
         public List<UnitsClass> ChosenUnits = new List<UnitsClass>();
+        public UnitsClass LastSelectedUnit;
         public int FilteringID;
         public int MaxPoints = 500;
         public int CurrentUnitValueTotal = 0;
@@ -30,9 +44,25 @@ namespace WPFProject
             InitializeComponent();
         }
 
+        public SeriesCollection SeriesCollection { get; set; }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+        }
 
+        public int ForPieChart(int UnitType)
+        {
+            int AmountOfUnits = 0;
+
+            foreach (UnitsClass unit in ChosenUnits)
+            {
+                if(unit.UnitType == UnitType)
+                {
+                    AmountOfUnits++;
+                }
+            }
+
+            return AmountOfUnits;
         }
 
         //God this was one very efficient method
@@ -96,6 +126,7 @@ namespace WPFProject
 
             //Since we cant have have Cross - Faction armies, i will clear the ChosenUnits list and the ListBoxes
             ChosenUnits.Clear();
+            SubFacCombo.Items.Clear();
             ChosenUnitLbx.ItemsSource = null;
             UnitLbx.ItemsSource = null;
 
@@ -133,20 +164,22 @@ namespace WPFProject
             PointsNumberLabel.Visibility = Visibility.Visible;
             #endregion
 
-            //Actual usefull query
-            SubFactionClass subfaction = SubFacCombo.SelectedItem as SubFactionClass;
-            var query = from unit in DB.Units
-                        where unit.SubFactionID.Equals(subfaction.SubfactionID)
-                        select new UnitsClass()
-                        {
-                            UnitName = unit.Name,
-                            UnitType = unit.UnitTypeID,
-                            UnitValue = unit.UnitValue,
-                            UnitImage = unit.UnitImage
-                        };
+            if(SubFacCombo.SelectedIndex != -1)
+            {
+                //Actual usefull query
+                SubFactionClass subfaction = SubFacCombo.SelectedItem as SubFactionClass;
+                var query = from unit in DB.Units
+                            where unit.SubFactionID.Equals(subfaction.SubfactionID)
+                            select new UnitsClass()
+                            {
+                                UnitName = unit.Name,
+                                UnitType = unit.UnitTypeID,
+                                UnitValue = unit.UnitValue,
+                                UnitImage = unit.UnitImage
+                            };
 
-            UnitLbx.ItemsSource = query.ToList();
-            
+                UnitLbx.ItemsSource = query.ToList();
+            }
         }
 
         //This is for when the combo box changes so i need to adjust the variable that keeps track of Max Points in the game
@@ -268,21 +301,96 @@ namespace WPFProject
         {
             UnitsClass SelectedUnit = UnitLbx.SelectedItem as UnitsClass;
 
-            if(SelectedUnit != null)
+            if (SelectedUnit != null)
             {
-                ChosenUnits.Add(SelectedUnit);
+                if (MaxPoints - Convert.ToInt32(SelectedUnit.UnitValue) > 0)
+                {
+                    LastSelectedUnit = SelectedUnit;
+                    ChosenUnits.Add(SelectedUnit);
 
-                //Must be emptied otherwise it bugs it out and doesnt display the untis
-                ChosenUnitLbx.ItemsSource = null;
-                ChosenUnits.Sort();
-                ChosenUnitLbx.ItemsSource = ChosenUnits;
+                    //Must be emptied otherwise it bugs it out and doesnt display the untis
+                    ChosenUnitLbx.ItemsSource = null;
+                    ChosenUnits.Sort();
+                    ChosenUnitLbx.ItemsSource = ChosenUnits;
+                    
 
-                Filtering(FilteringID);
+                    Filtering(FilteringID);
 
-                MaxPoints -= Convert.ToInt32(SelectedUnit.UnitValue);
-                PointsNumberLabel.Content = MaxPoints.ToString();
+                    MaxPoints -= Convert.ToInt32(SelectedUnit.UnitValue);
+                    PointsNumberLabel.Content = MaxPoints.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Insufficient Points");
+                }
+
             }
         }
         #endregion
+
+        private void PieButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeriesCollection = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "HQ",
+                    Values = new ChartValues<ObservableValue>{new ObservableValue(ForPieChart(1))},
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Troops",
+                    Values = new ChartValues<ObservableValue>{new ObservableValue(ForPieChart(2))},
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Elites",
+                    Values = new ChartValues<ObservableValue>{new ObservableValue(ForPieChart(3))},
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Fast Attack",
+                    Values = new ChartValues<ObservableValue>{new ObservableValue(ForPieChart(4))},
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Heavy Support",
+                    Values = new ChartValues<ObservableValue>{new ObservableValue(ForPieChart(5))},
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Lord Of War",
+                    Values = new ChartValues<ObservableValue>{new ObservableValue(ForPieChart(6))},
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Transport",
+                    Values = new ChartValues<ObservableValue>{new ObservableValue(ForPieChart(7))},
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Flyer",
+                    Values = new ChartValues<ObservableValue>{new ObservableValue(ForPieChart(8))},
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Fortification",
+                    Values = new ChartValues<ObservableValue>{new ObservableValue(ForPieChart(9))},
+                    DataLabels = true
+                }
+            };
+
+            piechart.Series = SeriesCollection;
+        }
     }
 }
+
+

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="https://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:WPFProject" xmlns:materialDesign1="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
          mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000" Loaded="Window_Loaded">
     
@@ -23,103 +24,121 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+
+    <TabControl>
+        <TabItem Header="Choose Roster">
+            <Grid Resources="{StaticResource MaterialDesign}">
+                <!--Grid n row definition-->
+                <!--#region -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--#endregion-->
+
+                <!--Points Boxo-->
+                <Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="25" FontFamily="Times New Roman"  Content="Max points" HorizontalAlignment="Center" IsHitTestVisible="False" FontWeight="Bold"/>
+                <ComboBox Grid.Column="0" Grid.Row="1" Name="PointCombo" HorizontalContentAlignment="Center" IsReadOnly="True" Margin="8" SelectedIndex="0" FontFamily="Times New Roman" SelectionChanged="PointCombo_SelectionChanged">
+                    <ComboBoxItem Content="Combat Patrol - 500" FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
+                    <ComboBoxItem Content="Incursion - 1000" FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
+                    <ComboBoxItem Content="Strike Force - 2000" FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
+                    <ComboBoxItem Content="Onslaught - 3000" FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
+                </ComboBox>
+
+                <!--Main Faction Boxo-->
+                <ComboBox Grid.Column="0" Grid.Row="2" Name="FacCombo" HorizontalContentAlignment="Center" IsReadOnly="True" Margin="8" SelectedIndex="-1" SelectionChanged="FacCombo_SelectionChanged" FontFamily="Times New Roman" >
+                    <ComboBoxItem Content="Chaos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Black" Foreground="Red"   />
+                    <ComboBoxItem Content="Imperium" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Gold" Foreground="Red"/>
+                    <ComboBoxItem Content="Xenos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Purple" Foreground="LimeGreen"/>
+                    <ComboBoxItem Content="Forge Worlds" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="SandyBrown" Foreground="Black"/>
+                </ComboBox>
+                <Label Name="FactionLabel" Grid.Row="2" Grid.Column="0" Height="25" FontFamily="Times New Roman"  Content="Please Select a Faction" HorizontalAlignment="Center" IsHitTestVisible="False"/>
+
+                <!--Sub Faction Boxo-->
+                <ComboBox Grid.Row="3" Grid.Column="0" Name="SubFacCombo" IsReadOnly="True" Margin="8" Visibility="Hidden" IsHitTestVisible="False" SelectionChanged="SubFacCombo_SelectionChanged" FontFamily="Times New Roman" HorizontalContentAlignment="Center">
+                </ComboBox>
+                <Label Name="SubFactionLabel" Grid.Row="3" Grid.Column="0" Height="25" FontFamily="Times New Roman"  Content="Please Select a Sub Faction" HorizontalAlignment="Center" IsHitTestVisible="False" Visibility="Hidden"/>
+
+                <!--New Grid for Stuff!-->
+                <!--#region -->
+                <!--Ok so now everything else is done here, making a new grid makes my life much easier, now i douch have done a -->
+                <Grid Grid.Column="1" Grid.RowSpan="10" Visibility="Hidden" Name="UnitsColumn" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Name="UnitLabel" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Height="25" FontFamily="Times New Roman"  Content="Units" HorizontalAlignment="Center" FontWeight="Bold"/>
+                    <RadioButton Name="All"  Grid.Row="1" Grid.Column="1" Margin="5" Content="All" VerticalContentAlignment="Center" FontFamily="Times New Roman"  Checked="All_Checked"/>
+                    <RadioButton Name="HQ"  Grid.Row="2" Grid.Column="1" Margin="5" Content="HQ" VerticalContentAlignment="Center" FontFamily="Times New Roman"  Checked="HQ_Checked"/>
+                    <RadioButton Name="Troops" Grid.Row="3" Grid.Column="1" Margin="5" Content="Troops" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Troops_Checked"/>
+                    <RadioButton Name="Elites" Grid.Row="4" Grid.Column="1" Margin="5" Content="Elites" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Elites_Checked"/>
+                    <RadioButton Name="FastAttack" Grid.Row="5" Grid.Column="1" Margin="5" Content="Fast Attack" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="FastAttack_Checked"/>
+                    <RadioButton Name="HeavySupport" Grid.Row="6" Grid.Column="1" Margin="5" Content="Heavy Suppport" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="HeavySupport_Checked"/>
+                    <RadioButton Name="LordOfWar" Grid.Row="7" Grid.Column="1" Margin="5" Content="Lord Of War" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="LordOfWar_Checked"/>
+                    <RadioButton Name="Transport" Grid.Row="8" Grid.Column="1" Margin="5" Content="Transport" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Transport_Checked"/>
+                    <RadioButton Name="Flyer" Grid.Row="9" Grid.Column="1" Margin="5" Content="Flyer" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Flyer_Checked"/>
+                    <RadioButton Name="Fortification" Grid.Row="10" Grid.Column="1" Margin="5" Content="Fortification" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Fortification_Checked"/>
+                </Grid>
+                <!--#endregion-->
+
+                <!--List Boxes-->
+                <Label Name="UnitLbxLabel" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" Height="25" FontFamily="Times New Roman"  Content="List of Units" HorizontalAlignment="Center" IsHitTestVisible="False" FontWeight="Bold" Visibility="Hidden"/>
+                <ListBox Name="UnitLbx" Grid.Row="1" Grid.Column="2" Grid.RowSpan="9" Grid.ColumnSpan="2" BorderThickness="3" BorderBrush="Black" Margin="5" Visibility="Hidden" ItemTemplate="{StaticResource dataTemplateUnits}"/>
+
+                <Label Name="ChosenUnitLbxLabel" Grid.Row="0" Grid.RowSpan="2" Grid.Column="5" Grid.ColumnSpan="2" Height="25" FontFamily="Times New Roman"  Content="Chosen Units" HorizontalAlignment="Center" IsHitTestVisible="False" FontWeight="Bold" Visibility="Hidden"/>
+                <ListBox Name="ChosenUnitLbx" Grid.Row="1" Grid.Column="5" Grid.RowSpan="9" Grid.ColumnSpan="2" BorderThickness="3" BorderBrush="Black" Margin="5" Visibility="Hidden" ItemTemplate="{StaticResource dataTemplateUnits}"/>
+
+                <!--Buttons-->
+
+                <Button x:Name="AddUnitBtn" Content="Add Unit" Margin="5" Grid.Row="3" Grid.Column="4" Click="AddUnitBtn_Click" BorderThickness="3" BorderBrush="Black" Foreground="Black" Visibility="Hidden"/>
+                <Button x:Name="RemoveUnitBtn" Content="Remove Unit" Margin="5" Grid.Row="6" Grid.Column="4" Click="RemoveUnitBtn_Click" BorderThickness="3" BorderBrush="Black" Foreground="Black" Visibility="Hidden"/>
+
+                <Button x:Name="PieButton" Grid.Row="9" Content="Create Pie Chart" Foreground="Black" Margin="5" FontSize="11" Click="PieButton_Click"/>
+
+                <!--Points Labels-->
+                <Label Name="PointsTitleLabel" Grid.Row="8" Grid.Column="4" Content="Remaining Points" Margin="5"  Height="25" FontFamily="Times New Roman" Grid.RowSpan="2" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+                <Label Name="PointsNumberLabel" Grid.Row="9" Grid.Column="4" Content="500" Margin="5"  Height="25" FontFamily="Times New Roman" Grid.RowSpan="2" HorizontalContentAlignment="Center" Visibility="Hidden" />
+
+            </Grid>
+        </TabItem>
+        <TabItem Name="Pie" Header="A Pie Chart for no reason" Visibility="Visible">
+            <Grid>
+                <lvc:PieChart Name="piechart" LegendLocation="Bottom" Series="{Binding SeriesCollection}" Hoverable="True" InnerRadius="20" Margin="20" >
+                    <lvc:PieChart.ChartLegend>
+                        <lvc:DefaultLegend BulletSize="15" TextBlock.FontSize="10" TextBlock.FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
+                    </lvc:PieChart.ChartLegend>
+                    <lvc:PieChart.DataTooltip>
+                        <lvc:DefaultTooltip BulletSize="20"/>
+                    </lvc:PieChart.DataTooltip>
+                </lvc:PieChart>
+            </Grid>
+        </TabItem>
+    </TabControl>
     
-  
-    <Grid Resources="{StaticResource MaterialDesign}">
-        <!--Grid n row definition-->
-        <!--#region -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <!--#endregion-->
-        
-        <!--Points Boxo-->
-        <Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="25" FontFamily="Times New Roman"  Content="Max points" HorizontalAlignment="Center" IsHitTestVisible="False" FontWeight="Bold"/>
-        <ComboBox Grid.Column="0" Grid.Row="1" Name="PointCombo" HorizontalContentAlignment="Center" IsReadOnly="True" Margin="8" SelectedIndex="0" FontFamily="Times New Roman" SelectionChanged="PointCombo_SelectionChanged">
-            <ComboBoxItem Content="Combat Patrol - 500" FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
-            <ComboBoxItem Content="Incursion - 1000" FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
-            <ComboBoxItem Content="Strike Force - 2000" FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
-            <ComboBoxItem Content="Onslaught - 3000" FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
-        </ComboBox>
-        
-        <!--Main Faction Boxo-->
-        <ComboBox Grid.Column="0" Grid.Row="2" Name="FacCombo" HorizontalContentAlignment="Center" IsReadOnly="True" Margin="8" SelectedIndex="-1" SelectionChanged="FacCombo_SelectionChanged" FontFamily="Times New Roman" >
-            <ComboBoxItem Content="Chaos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Black" Foreground="Red"   />
-            <ComboBoxItem Content="Imperium" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Gold" Foreground="Red"/>
-            <ComboBoxItem Content="Xenos" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="Purple" Foreground="LimeGreen"/>
-            <ComboBoxItem Content="Forge Worlds" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Background="SandyBrown" Foreground="Black"/>
-        </ComboBox>
-        <Label Name="FactionLabel" Grid.Row="2" Grid.Column="0" Height="25" FontFamily="Times New Roman"  Content="Please Select a Faction" HorizontalAlignment="Center" IsHitTestVisible="False"/>
-
-        <!--Sub Faction Boxo-->
-        <ComboBox Grid.Row="3" Grid.Column="0" Name="SubFacCombo" IsReadOnly="True" Margin="8" Visibility="Hidden" IsHitTestVisible="False" SelectionChanged="SubFacCombo_SelectionChanged" FontFamily="Times New Roman" HorizontalContentAlignment="Center">
-        </ComboBox>
-        <Label Name="SubFactionLabel" Grid.Row="3" Grid.Column="0" Height="25" FontFamily="Times New Roman"  Content="Please Select a Sub Faction" HorizontalAlignment="Center" IsHitTestVisible="False" Visibility="Hidden"/>
-
-        <!--New Grid for Stuff!-->
-        <!--#region -->
-        <!--Ok so now everything else is done here, making a new grid makes my life much easier, now i douch have done a -->
-        <Grid Grid.Column="1" Grid.RowSpan="10" Visibility="Hidden" Name="UnitsColumn" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Label Name="UnitLabel" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Height="25" FontFamily="Times New Roman"  Content="Units" HorizontalAlignment="Center" FontWeight="Bold"/>
-            <RadioButton Name="All"  Grid.Row="1" Grid.Column="1" Margin="5" Content="All" VerticalContentAlignment="Center" FontFamily="Times New Roman"  Checked="All_Checked"/>
-            <RadioButton Name="HQ"  Grid.Row="2" Grid.Column="1" Margin="5" Content="HQ" VerticalContentAlignment="Center" FontFamily="Times New Roman"  Checked="HQ_Checked"/>
-            <RadioButton Name="Troops" Grid.Row="3" Grid.Column="1" Margin="5" Content="Troops" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Troops_Checked"/>
-            <RadioButton Name="Elites" Grid.Row="4" Grid.Column="1" Margin="5" Content="Elites" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Elites_Checked"/>
-            <RadioButton Name="FastAttack" Grid.Row="5" Grid.Column="1" Margin="5" Content="Fast Attack" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="FastAttack_Checked"/>
-            <RadioButton Name="HeavySupport" Grid.Row="6" Grid.Column="1" Margin="5" Content="Heavy Suppport" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="HeavySupport_Checked"/>
-            <RadioButton Name="LordOfWar" Grid.Row="7" Grid.Column="1" Margin="5" Content="Lord Of War" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="LordOfWar_Checked"/>
-            <RadioButton Name="Transport" Grid.Row="8" Grid.Column="1" Margin="5" Content="Transport" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Transport_Checked"/>
-            <RadioButton Name="Flyer" Grid.Row="9" Grid.Column="1" Margin="5" Content="Flyer" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Flyer_Checked"/>
-            <RadioButton Name="Fortification" Grid.Row="10" Grid.Column="1" Margin="5" Content="Fortification" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Fortification_Checked"/>
-        </Grid>
-        <!--#endregion-->
-    
-        <!--List Boxes-->
-        <Label Name="UnitLbxLabel" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" Height="25" FontFamily="Times New Roman"  Content="List of Units" HorizontalAlignment="Center" IsHitTestVisible="False" FontWeight="Bold" Visibility="Hidden"/>
-        <ListBox Name="UnitLbx" Grid.Row="1" Grid.Column="2" Grid.RowSpan="9" Grid.ColumnSpan="2" BorderThickness="3" BorderBrush="Black" Margin="5" Visibility="Hidden" ItemTemplate="{StaticResource dataTemplateUnits}"/>
-        
-        <Label Name="ChosenUnitLbxLabel" Grid.Row="0" Grid.RowSpan="2" Grid.Column="5" Grid.ColumnSpan="2" Height="25" FontFamily="Times New Roman"  Content="Chosen Units" HorizontalAlignment="Center" IsHitTestVisible="False" FontWeight="Bold" Visibility="Hidden"/>
-        <ListBox Name="ChosenUnitLbx" Grid.Row="1" Grid.Column="5" Grid.RowSpan="9" Grid.ColumnSpan="2" BorderThickness="3" BorderBrush="Black" Margin="5" Visibility="Hidden" ItemTemplate="{StaticResource dataTemplateUnits}"/>
-
-        <!--Buttons-->
-
-        <Button x:Name="AddUnitBtn" Content="Add Unit" Margin="5" Grid.Row="3" Grid.Column="4" Click="AddUnitBtn_Click" BorderThickness="3" BorderBrush="Black" Foreground="Black" Visibility="Hidden"/>
-        <Button x:Name="RemoveUnitBtn" Content="Remove Unit" Margin="5" Grid.Row="6" Grid.Column="4" Click="RemoveUnitBtn_Click" BorderThickness="3" BorderBrush="Black" Foreground="Black" Visibility="Hidden"/>
-
-        <!--Points Labels-->
-        <Label Name="PointsTitleLabel" Grid.Row="8" Grid.Column="4" Content="Remaining Points" Margin="5"  Height="25" FontFamily="Times New Roman" Grid.RowSpan="2" HorizontalContentAlignment="Center" Visibility="Hidden"/>
-        <Label Name="PointsNumberLabel" Grid.Row="9" Grid.Column="4" Content="500" Margin="5"  Height="25" FontFamily="Times New Roman" Grid.RowSpan="2" HorizontalContentAlignment="Center" Visibility="Hidden" />
-
-    </Grid>
 </Window>

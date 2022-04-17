@@ -12,7 +12,6 @@ C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year
 C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\bin\Debug\MaterialDesignColors.pdb
 C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\bin\Debug\MaterialDesignThemes.Wpf.xml
-C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\obj\Debug\WPFProject.csproj.AssemblyReference.cache
 C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\obj\Debug\MainWindow.g.cs
 C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\obj\Debug\App.g.cs
 C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\obj\Debug\WPFProject_Content.g.cs
@@ -26,3 +25,10 @@ C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year
 C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\obj\Debug\WPFProject.csproj.CopyComplete
 C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\obj\Debug\WPFProject.exe
 C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\obj\Debug\WPFProject.pdb
+C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\bin\Debug\LiveCharts.dll
+C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\bin\Debug\LiveCharts.pdb
+C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\bin\Debug\LiveCharts.xml
+C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\bin\Debug\LiveCharts.Wpf.xml
+C:\Users\kovza\Documents\GitHub\Warhammer40k_Project_DanielKovzan\S00212883_Year2_Semester2 Project\WPFProject\obj\Debug\WPFProject.csproj.AssemblyReference.cache
