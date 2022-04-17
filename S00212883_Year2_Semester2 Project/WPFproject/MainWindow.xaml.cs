@@ -21,6 +21,8 @@ namespace WPFProject
     public partial class MainWindow : Window
     {
         WarHammer40kDBEntities DB = new WarHammer40kDBEntities();
+        public List<UnitsClass> ChosenUnits = new List<UnitsClass>();
+        public int FilteringID;
         public int MaxPoints = 500;
         public int CurrentUnitValueTotal = 0;
         public MainWindow()
@@ -33,6 +35,54 @@ namespace WPFProject
 
         }
 
+        //God this was one very efficient method
+        public void Filtering(int UnitType)
+        {
+            if (FilteringID == 0)
+            {
+                SubFactionClass subfaction = SubFacCombo.SelectedItem as SubFactionClass;
+                var query = from unit in DB.Units
+                            where unit.SubFactionID.Equals(subfaction.SubfactionID)
+                            select new UnitsClass()
+                            {
+                                UnitName = unit.Name,
+                                UnitType = unit.UnitTypeID,
+                                UnitValue = unit.UnitValue,
+                                UnitImage = unit.UnitImage
+                            };
+                UnitLbx.ItemsSource = query.ToList();
+                ChosenUnitLbx.ItemsSource = ChosenUnits;
+            }
+            else
+            {
+                SubFactionClass subfaction = SubFacCombo.SelectedItem as SubFactionClass;
+                var query = from unit in DB.Units
+                            where unit.SubFactionID.Equals(subfaction.SubfactionID) && unit.UnitTypeID.Equals(UnitType)
+                            select new UnitsClass()
+                            {
+                                UnitName = unit.Name,
+                                UnitType = unit.UnitTypeID,
+                                UnitValue = unit.UnitValue,
+                                UnitImage = unit.UnitImage
+                            };
+                UnitLbx.ItemsSource = query.ToList();
+
+                List<UnitsClass> FilteredChosenUnits = new List<UnitsClass>();
+                if (ChosenUnits.Count != 0)
+                {
+                    foreach (UnitsClass unit in ChosenUnits)
+                    {
+                        if (unit.UnitType == UnitType)
+                        {
+                            FilteredChosenUnits.Add(unit);
+                        }
+                    }
+                }
+                ChosenUnitLbx.ItemsSource = FilteredChosenUnits;
+            }
+        }
+
+        //Choose a faction
         private void FacCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //Unhiding and hiding stuff
@@ -41,6 +91,11 @@ namespace WPFProject
             SubFacCombo.SelectedIndex = -1;
             SubFactionLabel.Visibility = Visibility.Visible;
             FactionLabel.Visibility = Visibility.Hidden;
+
+            //Since we cant have have Cross - Faction armies, i will clear the ChosenUnits list and the ListBoxes
+            ChosenUnits.Clear();
+            ChosenUnitLbx.ItemsSource = null;
+            UnitLbx.ItemsSource = null;
 
             //Query and Output
             int ID = FacCombo.SelectedIndex +  1;
@@ -58,15 +113,23 @@ namespace WPFProject
             }
         }
 
+        //Choose a SubFaction
         private void SubFacCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //revealing everything, im starting to hate this, genuinely
+            #region
             SubFactionLabel.Visibility = Visibility.Hidden;
             UnitsColumn.Visibility = Visibility.Visible;
             UnitLabel.Visibility = Visibility.Visible;
+            UnitLbxLabel.Visibility = Visibility.Visible;
             UnitLbx.Visibility = Visibility.Visible;
             ChosenUnitLbx.Visibility = Visibility.Visible;
             ChosenUnitLbxLabel.Visibility = Visibility.Visible;
+            AddUnitBtn.Visibility = Visibility.Visible;
+            RemoveUnitBtn.Visibility = Visibility.Visible;
+            PointsTitleLabel.Visibility = Visibility.Visible;
+            PointsNumberLabel.Visibility = Visibility.Visible;
+            #endregion
 
             //Actual usefull query
             SubFactionClass subfaction = SubFacCombo.SelectedItem as SubFactionClass;
@@ -106,50 +169,112 @@ namespace WPFProject
                 MaxPoints = 3000;
             }
         }
+
+
         //This is for filtering
+        #region
+        private void All_Checked(object sender, RoutedEventArgs e)
+        {
+            FilteringID = 0;
+            Filtering(FilteringID);
+        }
         private void HQ_Checked(object sender, RoutedEventArgs e)
         {
-            
+            FilteringID = 1;
+            Filtering(1);
         }
 
         private void Troops_Checked(object sender, RoutedEventArgs e)
         {
-
+            FilteringID = 2;
+            Filtering(2);
         }
 
         private void Elites_Checked(object sender, RoutedEventArgs e)
         {
-
+            FilteringID = 3;
+            Filtering(3);
         }
 
         private void FastAttack_Checked(object sender, RoutedEventArgs e)
         {
-
+            FilteringID = 4;
+            Filtering(4);
         }
 
         private void HeavySupport_Checked(object sender, RoutedEventArgs e)
         {
-
+            FilteringID = 5;
+            Filtering(5);
         }
 
         private void LordOfWar_Checked(object sender, RoutedEventArgs e)
         {
-
+            FilteringID = 6;
+            Filtering(6);
         }
 
         private void Transport_Checked(object sender, RoutedEventArgs e)
         {
-
+            FilteringID = 7;
+            Filtering(7);
         }
 
         private void Flyer_Checked(object sender, RoutedEventArgs e)
         {
-
+            FilteringID = 8;
+            Filtering(8);
         }
 
         private void Fortification_Checked(object sender, RoutedEventArgs e)
         {
-
+            FilteringID = 9;
+            Filtering(9);
         }
+        #endregion
+
+        //Buttons
+        #region
+        //Remove units from ChosenUntisLbx
+        private void RemoveUnitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+            UnitsClass SelectedUnit = ChosenUnitLbx.SelectedItem as UnitsClass;
+
+            if(SelectedUnit != null)
+            {
+                ChosenUnits.Remove(SelectedUnit);
+
+                ChosenUnitLbx.ItemsSource = null;
+                ChosenUnits.Sort();
+                ChosenUnitLbx.ItemsSource = ChosenUnits;
+
+                Filtering(FilteringID);
+
+                MaxPoints += Convert.ToInt32(SelectedUnit.UnitValue);
+                PointsNumberLabel.Content = MaxPoints.ToString();
+            }           
+        }
+        //Add units to ChosentUnitsLbx /  the army roster
+        private void AddUnitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            UnitsClass SelectedUnit = UnitLbx.SelectedItem as UnitsClass;
+
+            if(SelectedUnit != null)
+            {
+                ChosenUnits.Add(SelectedUnit);
+
+                //Must be emptied otherwise it bugs it out and doesnt display the untis
+                ChosenUnitLbx.ItemsSource = null;
+                ChosenUnits.Sort();
+                ChosenUnitLbx.ItemsSource = ChosenUnits;
+
+                Filtering(FilteringID);
+
+                MaxPoints -= Convert.ToInt32(SelectedUnit.UnitValue);
+                PointsNumberLabel.Content = MaxPoints.ToString();
+            }
+        }
+        #endregion
     }
 }

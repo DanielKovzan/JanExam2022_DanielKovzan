@@ -52,7 +52,7 @@
         <!--#endregion-->
         
         <!--Points Boxo-->
-        <Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="25" FontFamily="Times New Roman"  Content="Max points" HorizontalAlignment="Center" IsHitTestVisible="False"/>
+        <Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="25" FontFamily="Times New Roman"  Content="Max points" HorizontalAlignment="Center" IsHitTestVisible="False" FontWeight="Bold"/>
         <ComboBox Grid.Column="0" Grid.Row="1" Name="PointCombo" HorizontalContentAlignment="Center" IsReadOnly="True" Margin="8" SelectedIndex="0" FontFamily="Times New Roman" SelectionChanged="PointCombo_SelectionChanged">
             <ComboBoxItem Content="Combat Patrol - 500" FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
             <ComboBoxItem Content="Incursion - 1000" FontFamily="Times New Roman" HorizontalContentAlignment="Center" />
@@ -89,17 +89,19 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Name="UnitLabel" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Height="25" FontFamily="Times New Roman"  Content="Units" HorizontalAlignment="Center" FontWeight="Bold"/>
-            <RadioButton Name="HQ"  Grid.Row="1" Grid.Column="1" Margin="5" Content="HQ" VerticalContentAlignment="Center" FontFamily="Times New Roman"  Checked="HQ_Checked"/>
-            <RadioButton Name="Troops" Grid.Row="2" Grid.Column="1" Margin="5" Content="Troops" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Troops_Checked"/>
-            <RadioButton Name="Elites" Grid.Row="3" Grid.Column="1" Margin="5" Content="Elites" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Elites_Checked"/>
-            <RadioButton Name="FastAttack" Grid.Row="4" Grid.Column="1" Margin="5" Content="Fast Attack" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="FastAttack_Checked"/>
-            <RadioButton Name="HeavySupport" Grid.Row="5" Grid.Column="1" Margin="5" Content="Heavy Suppport" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="HeavySupport_Checked"/>
-            <RadioButton Name="LordOfWar" Grid.Row="6" Grid.Column="1" Margin="5" Content="Lord Of War" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="LordOfWar_Checked"/>
-            <RadioButton Name="Transport" Grid.Row="7" Grid.Column="1" Margin="5" Content="Transport" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Transport_Checked"/>
-            <RadioButton Name="Flyer" Grid.Row="8" Grid.Column="1" Margin="5" Content="Flyer" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Flyer_Checked"/>
-            <RadioButton Name="Fortification" Grid.Row="9" Grid.Column="1" Margin="5" Content="Fortification" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Fortification_Checked"/>
+            <RadioButton Name="All"  Grid.Row="1" Grid.Column="1" Margin="5" Content="All" VerticalContentAlignment="Center" FontFamily="Times New Roman"  Checked="All_Checked"/>
+            <RadioButton Name="HQ"  Grid.Row="2" Grid.Column="1" Margin="5" Content="HQ" VerticalContentAlignment="Center" FontFamily="Times New Roman"  Checked="HQ_Checked"/>
+            <RadioButton Name="Troops" Grid.Row="3" Grid.Column="1" Margin="5" Content="Troops" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Troops_Checked"/>
+            <RadioButton Name="Elites" Grid.Row="4" Grid.Column="1" Margin="5" Content="Elites" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Elites_Checked"/>
+            <RadioButton Name="FastAttack" Grid.Row="5" Grid.Column="1" Margin="5" Content="Fast Attack" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="FastAttack_Checked"/>
+            <RadioButton Name="HeavySupport" Grid.Row="6" Grid.Column="1" Margin="5" Content="Heavy Suppport" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="HeavySupport_Checked"/>
+            <RadioButton Name="LordOfWar" Grid.Row="7" Grid.Column="1" Margin="5" Content="Lord Of War" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="LordOfWar_Checked"/>
+            <RadioButton Name="Transport" Grid.Row="8" Grid.Column="1" Margin="5" Content="Transport" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Transport_Checked"/>
+            <RadioButton Name="Flyer" Grid.Row="9" Grid.Column="1" Margin="5" Content="Flyer" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Flyer_Checked"/>
+            <RadioButton Name="Fortification" Grid.Row="10" Grid.Column="1" Margin="5" Content="Fortification" VerticalContentAlignment="Center" FontFamily="Times New Roman" Checked="Fortification_Checked"/>
         </Grid>
         <!--#endregion-->
     
@@ -111,10 +113,13 @@
         <ListBox Name="ChosenUnitLbx" Grid.Row="1" Grid.Column="5" Grid.RowSpan="9" Grid.ColumnSpan="2" BorderThickness="3" BorderBrush="Black" Margin="5" Visibility="Hidden" ItemTemplate="{StaticResource dataTemplateUnits}"/>
 
         <!--Buttons-->
-        
-        
-        
-        
-        
+
+        <Button x:Name="AddUnitBtn" Content="Add Unit" Margin="5" Grid.Row="3" Grid.Column="4" Click="AddUnitBtn_Click" BorderThickness="3" BorderBrush="Black" Foreground="Black" Visibility="Hidden"/>
+        <Button x:Name="RemoveUnitBtn" Content="Remove Unit" Margin="5" Grid.Row="6" Grid.Column="4" Click="RemoveUnitBtn_Click" BorderThickness="3" BorderBrush="Black" Foreground="Black" Visibility="Hidden"/>
+
+        <!--Points Labels-->
+        <Label Name="PointsTitleLabel" Grid.Row="8" Grid.Column="4" Content="Remaining Points" Margin="5"  Height="25" FontFamily="Times New Roman" Grid.RowSpan="2" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+        <Label Name="PointsNumberLabel" Grid.Row="9" Grid.Column="4" Content="500" Margin="5"  Height="25" FontFamily="Times New Roman" Grid.RowSpan="2" HorizontalContentAlignment="Center" Visibility="Hidden" />
+
     </Grid>
 </Window>
