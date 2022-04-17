@@ -65,53 +65,6 @@ namespace WPFProject
             return AmountOfUnits;
         }
 
-        //God this was one very efficient method
-        public void Filtering(int UnitType)
-        {
-            if (FilteringID == 0)
-            {
-                SubFactionClass subfaction = SubFacCombo.SelectedItem as SubFactionClass;
-                var query = from unit in DB.Units
-                            where unit.SubFactionID.Equals(subfaction.SubfactionID)
-                            select new UnitsClass()
-                            {
-                                UnitName = unit.Name,
-                                UnitType = unit.UnitTypeID,
-                                UnitValue = unit.UnitValue,
-                                UnitImage = unit.UnitImage
-                            };
-                UnitLbx.ItemsSource = query.ToList();
-                ChosenUnitLbx.ItemsSource = ChosenUnits;
-            }
-            else
-            {
-                SubFactionClass subfaction = SubFacCombo.SelectedItem as SubFactionClass;
-                var query = from unit in DB.Units
-                            where unit.SubFactionID.Equals(subfaction.SubfactionID) && unit.UnitTypeID.Equals(UnitType)
-                            select new UnitsClass()
-                            {
-                                UnitName = unit.Name,
-                                UnitType = unit.UnitTypeID,
-                                UnitValue = unit.UnitValue,
-                                UnitImage = unit.UnitImage
-                            };
-                UnitLbx.ItemsSource = query.ToList();
-
-                List<UnitsClass> FilteredChosenUnits = new List<UnitsClass>();
-                if (ChosenUnits.Count != 0)
-                {
-                    foreach (UnitsClass unit in ChosenUnits)
-                    {
-                        if (unit.UnitType == UnitType)
-                        {
-                            FilteredChosenUnits.Add(unit);
-                        }
-                    }
-                }
-                ChosenUnitLbx.ItemsSource = FilteredChosenUnits;
-            }
-        }
-
         //ComboBoxes
         #region
         //Choose a faction
@@ -212,6 +165,52 @@ namespace WPFProject
         }
         #endregion
 
+        //God this was one very efficient method
+        public void Filtering(int UnitType)
+        {
+            if (FilteringID == 0)
+            {
+                SubFactionClass subfaction = SubFacCombo.SelectedItem as SubFactionClass;
+                var query = from unit in DB.Units
+                            where unit.SubFactionID.Equals(subfaction.SubfactionID)
+                            select new UnitsClass()
+                            {
+                                UnitName = unit.Name,
+                                UnitType = unit.UnitTypeID,
+                                UnitValue = unit.UnitValue,
+                                UnitImage = unit.UnitImage
+                            };
+                UnitLbx.ItemsSource = query.ToList();
+                ChosenUnitLbx.ItemsSource = ChosenUnits;
+            }
+            else
+            {
+                SubFactionClass subfaction = SubFacCombo.SelectedItem as SubFactionClass;
+                var query = from unit in DB.Units
+                            where unit.SubFactionID.Equals(subfaction.SubfactionID) && unit.UnitTypeID.Equals(UnitType)
+                            select new UnitsClass()
+                            {
+                                UnitName = unit.Name,
+                                UnitType = unit.UnitTypeID,
+                                UnitValue = unit.UnitValue,
+                                UnitImage = unit.UnitImage
+                            };
+                UnitLbx.ItemsSource = query.ToList();
+
+                List<UnitsClass> FilteredChosenUnits = new List<UnitsClass>();
+                if (ChosenUnits.Count != 0)
+                {
+                    foreach (UnitsClass unit in ChosenUnits)
+                    {
+                        if (unit.UnitType == UnitType)
+                        {
+                            FilteredChosenUnits.Add(unit);
+                        }
+                    }
+                }
+                ChosenUnitLbx.ItemsSource = FilteredChosenUnits;
+            }
+        }
         //This is for filtering
         #region
         private void All_Checked(object sender, RoutedEventArgs e)
@@ -328,6 +327,7 @@ namespace WPFProject
         }
         #endregion
 
+        //makes a god damn pie chart
         private void PieButton_Click(object sender, RoutedEventArgs e)
         {
             SeriesCollection = new SeriesCollection
