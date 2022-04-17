@@ -82,6 +82,8 @@ namespace WPFProject
             }
         }
 
+        //ComboBoxes
+        #region
         //Choose a faction
         private void FacCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -168,8 +170,14 @@ namespace WPFProject
             {
                 MaxPoints = 3000;
             }
+            if (PointsNumberLabel != null)
+            {
+                PointsNumberLabel.Content = MaxPoints.ToString();
+                ChosenUnits.Clear();
+                ChosenUnitLbx.ItemsSource = null;
+            }
         }
-
+        #endregion
 
         //This is for filtering
         #region
